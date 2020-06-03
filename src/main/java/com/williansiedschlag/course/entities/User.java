@@ -1,14 +1,19 @@
 package com.williansiedschlag.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable{
 	
 	
@@ -21,6 +26,20 @@ public class User implements Serializable{
 	private String email; 
 	private String phone;
 	private String password;
+	
+	// Essa seria associação, um usuario pode fazer vários pedidos
+	// Um pedido pode ter apenas um usuario
+	// Criar o método. Nesse caso clik e framework já faz o procedimento
+	// Metodo esta lá embaixo
+	// Essa classe ordem e referente associação entre User e Order 
+	
+	// Esse abaixo é muitos para 1 
+	// Dentro do parentes coloco o que tem lá do outra lado (classe Order)
+	// Esta mapeado pelo atraibuto client que esta na classe Order 
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
+	
 	
 	public User() {
 		
@@ -101,6 +120,11 @@ public class User implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+
+	public List<Order> getOrders() {
+		return orders;
 	}
 	
 	

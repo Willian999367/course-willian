@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "tb_user")
@@ -36,6 +38,7 @@ public class User implements Serializable{
 	// Esse abaixo é muitos para 1 
 	// Dentro do parentes coloco o que tem lá do outra lado (classe Order)
 	// Esta mapeado pelo atraibuto client que esta na classe Order 
+	@JsonIgnore // Para não entrar loop infinito entre User e Order
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	

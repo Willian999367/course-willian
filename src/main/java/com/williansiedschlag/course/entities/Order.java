@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 // 7 - Impelmentar o Serializable. Gerar o serial id padrão. Click em orderm para fazer isso
 
 // 9 - Declarar anotação, não esquecer de importar por persistence
@@ -27,12 +30,16 @@ public class Order implements Serializable{
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id; 
+	
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone="GMT")
 	private Instant moment;
 	
 	// 2 - Associação com as outras classes. Exemplo User
 	// Nome no diagrama esta o nome correto
 	// Um usuario pode ter varios pedidos 
 	// Mas um pedido que esse caso, pode ter apenas um usuario
+	
 	
 	@ManyToOne
 	// Vou falar o nome da chave estrangeira que tem no banco de dados

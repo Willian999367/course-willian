@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.williansiedschlag.course.entities.enums.OrderStatus;
 
 
 // 7 - Impelmentar o Serializable. Gerar o serial id padrão. Click em orderm para fazer isso
@@ -35,6 +36,10 @@ public class Order implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone="GMT")
 	private Instant moment;
 	
+	// Tiro o tipo OrderStatus e coloco Interger para dizer para o banco 
+	// que estou gravando um numero inteiro
+	private Integer orderStatus; 
+	
 	// 2 - Associação com as outras classes. Exemplo User
 	// Nome no diagrama esta o nome correto
 	// Um usuario pode ter varios pedidos 
@@ -54,10 +59,11 @@ public class Order implements Serializable{
 	}
 	
 	// 4 - Criar construtor com argumentos
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 	
@@ -77,6 +83,17 @@ public class Order implements Serializable{
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+	
+
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOF(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if(orderStatus != null) {
+		this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	public User getClient() {

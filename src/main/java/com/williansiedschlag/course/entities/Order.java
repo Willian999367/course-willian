@@ -52,6 +52,7 @@ public class Order implements Serializable{
 	
 	
 	// Vou falar o nome da chave estrangeira que tem no banco de dados
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client; 
@@ -134,6 +135,14 @@ public class Order implements Serializable{
 
 	public Set<OrderItem> getItems(){
 		return items; 
+	}
+	
+	public Double getTotal() {
+		double sum = 0.0;
+		for(OrderItem x : items) {
+			sum += x.getSubTotal();
+		}
+		return sum; 
 	}
 	
 

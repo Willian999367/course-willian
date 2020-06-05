@@ -1,13 +1,17 @@
 package com.williansiedschlag.course.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.williansiedschlag.course.entities.User;
 import com.williansiedschlag.course.services.UserService;
@@ -48,4 +52,18 @@ public class UserResourse {
 			return ResponseEntity.ok().body(obj);
 		}
 		
+		//  ResponseEntity<User> vou retorno usuario inserido
+		// @ResquestBody User obj - > receber u objeto tipo user 
+		// @ResquestBody Para dizer que esse objeto vai chegar em mode json e vai ser 
+		// modificado para um topo obejeto user, vou usar @ResquestBody 
+		@PostMapping
+		public ResponseEntity<User> insert(@RequestBody User obj){
+			// Agora vou chamar meu service que já esta injetado 
+			obj = service.insert(obj);
+			
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
+					buildAndExpand(obj.getId()).toUri();
+			return ResponseEntity.created(uri).body(obj); 
+			
+		}
 }

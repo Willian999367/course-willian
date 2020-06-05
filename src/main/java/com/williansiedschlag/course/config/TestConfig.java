@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.williansiedschlag.course.entities.Category;
 import com.williansiedschlag.course.entities.Order;
 import com.williansiedschlag.course.entities.OrderItem;
+import com.williansiedschlag.course.entities.Payment;
 import com.williansiedschlag.course.entities.Product;
 import com.williansiedschlag.course.entities.User;
 import com.williansiedschlag.course.entities.enums.OrderStatus;
@@ -91,8 +92,14 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
-	
 		
+		
+		Payment pay1  = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1); 
+		// Quando e 1 para 1 e forma diferente. faço a associação para pedido(order)
+		o1.setPayment(pay1);
+		// Depois salvo o pedido novamente. O jpa cuida de salvar o pagamento
+	
+		orderRepository.save(o1); 
 	}
 	
 }

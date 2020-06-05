@@ -14,7 +14,7 @@ import com.williansiedschlag.course.entities.Product;
 
 // Foi importado por que essa classe e diferente das outras
 @Embeddable
-public class OrdemItemPK implements Serializable{
+public class OrderItemPK implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -59,7 +59,7 @@ public class OrdemItemPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrdemItemPK other = (OrdemItemPK) obj;
+		OrderItemPK other = (OrderItemPK) obj;
 		if (order == null) {
 			if (other.order != null)
 				return false;

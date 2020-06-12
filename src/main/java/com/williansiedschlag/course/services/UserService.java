@@ -3,6 +3,8 @@ package com.williansiedschlag.course.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -60,9 +62,13 @@ public class UserService {
 		// vou dar o nome de entity que vai ser uma unidade monitorada pelo 
 		// JPA 
 		// GetOne ele só prepara objeto depois vai no banco de dados (parecido com findby)
-		User entity = repository.getOne(id); 
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	
 	}
 
 	private void updateData(User entity, User obj) {
